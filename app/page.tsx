@@ -1,22 +1,40 @@
 import { Container } from "@/components/Container";
 import { Section } from "@/components/Section";
-import { PostList } from "@/components/PostList";
-import { getProfileSafe, getNotesSafe } from "@/lib/bluesky";
+import { getProfileSafe } from "@/lib/bluesky";
+// import { getSession } from "@/lib/auth/session";
+// import { LoginForm } from "@/components/LoginForm";
+// import { LogoutButton } from "@/components/LogOutButton";
+import Essays from "@/pages/Essays";
+import Notes from "@/pages/Notes";
 
 export default async function Home() {
   const handle = "skherceg.bsky.social";
+  // const session = await getSession();
 
-  const [profile, notes] = await Promise.all([
-    getProfileSafe(handle),
-    getNotesSafe(handle),
-  ]);
+  const [profile] = await Promise.all([getProfileSafe(handle)]);
 
   return (
     <Container>
       <header className="mb-12">
-        <h1 className="text-3xl font-bold tracking-tight">
+        <h1 className="text-3xl text-orange-300 font-bold font-mono tracking-tight">
           {profile?.displayName ?? "Writer"}
         </h1>
+
+        {/* <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-6">
+          {session ? (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                  Signed in as <span className="font-mono">{session.did}</span>
+                </p>
+                <LogoutButton />
+              </div>
+              <p className="text-green-600">Authentication working!</p>
+            </div>
+          ) : (
+            <LoginForm />
+          )}
+        </div> */}
 
         <p className="mt-2 text-orange-200">
           Writing about stuff. Good stuff!!
@@ -24,46 +42,15 @@ export default async function Home() {
       </header>
 
       <Section title="About">
-        <p className="text-orange-100 leading-relaxed">
+        <p className="text-orange-200 leading-relaxed">
           I write essays and build projects. This site is my publishing home,
           essays live here, notes live on Bluesky, everything else is an archive
           of what I am building.
         </p>
       </Section>
 
-      <Section title="Essays">
-        <PostList
-          items={[
-            { id: "1", title: "Why I am Building This", href: "/#" },
-            { id: "2", title: "On Systems Thinking", href: "/#" },
-          ]}
-        />
-      </Section>
-
-      <Section title="Notes">
-        {notes.length > 0 ? (
-          <PostList items={notes} />
-        ) : (
-          <p className="text-sm text-orange-200">No notes yet.</p>
-        )}
-      </Section>
-
-      <Section title="Projects">
-        <PostList
-          items={[
-            {
-              id: "p1",
-              title: "Atmospheric Website",
-              href: "/#",
-            },
-            {
-              id: "p2",
-              title: "Personal Analytics Tool",
-              href: "/#",
-            },
-          ]}
-        />
-      </Section>
+      <Essays />
+      <Notes />
 
       <footer className="mt-16 text-sm text-orange-100">
         Built with Next.js + ATProto

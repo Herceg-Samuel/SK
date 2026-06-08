@@ -1,9 +1,6 @@
-// src/components/PostList.tsx
-export function PostList({
-  items,
-}: {
-  items: { id: string; title: string; href: string }[];
-}) {
+type Items = { id: string; title: string; href: string };
+
+export function PostList({ items }: { items: Items[] }) {
   return (
     <ul className="space-y-3">
       {items.map((item) => (
