@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getOAuthClient } from "@/lib/auth/client";
+import dbConnect from "@/lib/mongodb";
+import { getDidRole } from "@/lib/auth/roles";
+import { User } from "@/models/User";
 
 const PUBLIC_URL = process.env.PUBLIC_URL || "http://127.0.0.1:3000";
 
@@ -10,6 +13,24 @@ export async function GET(request: NextRequest) {
 
     // Exchange code for session
     const { session } = await client.callback(params);
+    const role = getDidRole(session.did);
+
+    await dbConnect();
+    await User.updateOne(
+      { did: session.did },
+      {
+        $set: {
+          handle: session.did,
+          role,
+          isAdmin: role === "owner",
+          lastLoginAt: new Date(),
+        },
+        $setOnInsert: {
+          did: session.did,
+        },
+      },
+      { upsert: true },
+    );
 
     const response = NextResponse.redirect(new URL("/", PUBLIC_URL));
 
