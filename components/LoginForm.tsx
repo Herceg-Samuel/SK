@@ -7,7 +7,7 @@ export function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -48,17 +48,17 @@ export function LoginForm() {
           value={handle}
           onChange={(e) => setHandle(e.target.value)}
           placeholder="user.example.com"
-          className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
+          className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-300 dark:text-zinc-100"
           disabled={loading}
         />
       </div>
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && <p className="text-red-100 text-sm">{error}</p>}
 
       <button
         type="submit"
         disabled={loading || !handle}
-        className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+        className="w-full py-2 px-4 bg-blue-300 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
       >
         {loading ? "Signing in..." : "Sign in"}
       </button>

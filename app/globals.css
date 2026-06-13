@@ -24,3 +24,27 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer components {
+  .title {
+    @apply text-4xl md:text-5xl font-bold text-orange-300;
+  }
+  .screen {
+    @apply text-4xl md:text-5xl text-orange-300 font-bold font-mono tracking-tight;
+  }
+  .subtitle {
+    @apply text-lg text-orange-200 max-w-2xl;
+  }
+  .pages {
+    @apply space-y-4 mb-4 py-2 lg:mb-12 lg:py-12 px-8;
+  }
+  .nav-link {
+    @apply px-4 py-2 bg-orange-300 hover:bg-orange-200 text-black rounded-lg  transition-colors font-bold font-mono;
+  }
+  .essay-title {
+    @apply block text-sm font-medium text-orange-300 mb-2;
+  }
+  .essay-input {
+    @apply w-full font-mono text-sm px-4 py-2 border border-orange-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-transparent;
+  }
+}
